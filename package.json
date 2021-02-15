@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --host localhost",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-report": "vue-cli-service build --report"
+    "build-report": "vue-cli-service build --report",
+    "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
@@ -34,7 +35,8 @@
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.1.0",
     "sass-loader": "^10.1.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "execa": "latest"
   },
   "eslintConfig": {
     "root": true,
