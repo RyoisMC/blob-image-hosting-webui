@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { authGuard } from "../auth/authGuard";
-import homepage from '../views/homepage.vue';
-import files from '../views/files.vue';
-import error_pagenotfound from '../views/error_notfound.vue';
+const homepage = () => import(/* webpackChunkName: "homepage" */ '../views/homepage.vue');
+const files = () => import(/* webpackChunkName: "files" */ '../views/files.vue');
+const error_pagenotfound = () => import(/* webpackChunkName: "error_pagenotfound" */ '../views/error_notfound.vue');
+const unknown_user = () => import(/* webpackChunkName: "unknown_user" */ '../views/unknown_user.vue');
 Vue.use(VueRouter);
 
 const routes = [
@@ -25,6 +26,15 @@ const routes = [
     meta: {
       title: 'Files',
       visible: true
+    },
+  },
+  {
+    path: '/unknown_user',
+    name: 'unknown_user',
+    component: unknown_user,
+    meta: {
+      title: 'Unknown User',
+      visible: false
     },
   },
   {

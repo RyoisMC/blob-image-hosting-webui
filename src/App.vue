@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import globalNav from "./components/global/navbar.vue";
+const globalNav = () => import(/* webpackChunkName: "globalNav" */ './components/global/navbar.vue');
 
 export default {
   name: "blob-image-hosting-webui-app",
@@ -23,6 +23,7 @@ export default {
       USER_INFO: null,
       JWT_TOKEN: this.$parent.token,
       REFRESH_INTERVAL: 5 * 1000,
+      USER_AUTHORIZED: true,
     };
   },
 };

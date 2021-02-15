@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar
-      v-if="$auth.isAuthenticated"
+      v-if="$auth.isAuthenticated && this.$parent.USER_AUTHORIZED"
       toggleable="lg"
       type="dark"
       variant="dark"
@@ -62,6 +62,13 @@ export default {
         headers: {
           Authorization: `Bearer ${vm.$parent.JWT_TOKEN}`,
         },
+      })
+      .catch(function (error) {
+        console.log(error);
+        if(error.response.data.error_message == "UNKNOWN_USER"){
+          vm.$parent.USER_AUTHORIZED = false;
+          return vm.$router.push({ name: 'unknown_user' });
+        }
       });
       vm.$parent.USER_INFO = data.me;
       vm.$parent.STORAGE_USAGE = data.me.current_storage_usage;
@@ -91,6 +98,7 @@ export default {
     },
   },
   mounted: function () {
+    this.API_me();
     this.$nextTick(function () {
       window.setInterval(() => {
         this.API_me();

@@ -5,3 +5,13 @@
     </b-jumbotron>
   </div>
 </template>
+<style scoped>
+.jumbotron {
+  background-color: #212121 !important;
+}
+
+.jumbotron h1.display-3,
+.jumbotron p.lead {
+  color: #ffffff !important;
+}
+</style>

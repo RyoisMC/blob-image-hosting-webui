@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { LayoutPlugin, DropdownPlugin, TablePlugin } from 'bootstrap-vue'
+import { BootstrapVue } from 'bootstrap-vue'
 import Vuex from 'vuex'
 import router from './router'
 import { domain, clientId, audience } from "../auth_config.json";
@@ -18,9 +18,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-toast-notification/dist/theme-default.css';
 
 Vue.config.productionTip = false
-Vue.use(LayoutPlugin)
-Vue.use(DropdownPlugin)
-Vue.use(TablePlugin)
+Vue.use(BootstrapVue)
 Vue.use(Vuex)
 Vue.use(Auth0Plugin, {
   domain,
