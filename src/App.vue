@@ -8,7 +8,7 @@
 import globalNav from "./components/global/navbar.vue";
 
 export default {
-  name: 'blob-image-hosting-webui-app',
+  name: "blob-image-hosting-webui-app",
   components: {
     globalNav,
   },
@@ -23,9 +23,9 @@ export default {
       USER_INFO: null,
       JWT_TOKEN: this.$parent.token,
       REFRESH_INTERVAL: 5 * 1000,
-    }
+    };
   },
-}
+};
 </script>
 
 <style>

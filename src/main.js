@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { LayoutPlugin, DropdownPlugin, TablePlugin } from 'bootstrap-vue'
 import Vuex from 'vuex'
 import router from './router'
 import { domain, clientId, audience } from "../auth_config.json";
@@ -18,8 +18,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-toast-notification/dist/theme-default.css';
 
 Vue.config.productionTip = false
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+Vue.use(LayoutPlugin)
+Vue.use(DropdownPlugin)
+Vue.use(TablePlugin)
 Vue.use(Vuex)
 Vue.use(Auth0Plugin, {
   domain,
@@ -49,7 +50,7 @@ instance.$watch("loading", async loading => {
       data: data,
       render: h => h(App),
     }).$mount('#app')
-  }else{
+  } else {
     instance.loginWithRedirect();
   }
 });
