@@ -10,17 +10,19 @@ import globalNav from "./components/global/navbar.vue";
 export default {
   name: 'blob-image-hosting-webui-app',
   components: {
-    globalNav 
+    globalNav,
   },
-    data: function () {
+  data: function () {
     return {
-      API_BASE_URL: "https://api.blob.rocks/api/v2/",
+      API_BASE_URL: "https://api.blob.rocks/api/v2",
       API_KEY: null,
       STORAGE_USAGE: null,
       STORAGE_LIMIT: null,
-      SHAREX_JSON: null,
       USER_DOMAINS: null,
+      USER_DEFAULT_DOMAIN: null,
       USER_INFO: null,
+      JWT_TOKEN: null,
+      REFRESH_INTERVAL: 10 * 1000,
     }
   },
 }
@@ -33,12 +35,6 @@ html {
   padding: 0;
   height: 100%;
   overflow: hidden;
-}
-#blob-image-hosting-webui-app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  background-color: #121212 !important;
 }
 </style>
