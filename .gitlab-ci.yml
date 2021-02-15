@@ -1,7 +1,6 @@
 stages:
     - check
     - build
-    - test
 eslint:
     stage: check
     script:
