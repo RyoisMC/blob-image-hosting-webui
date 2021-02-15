@@ -17,9 +17,6 @@ export default {
     };
   },
   methods: {
-    async getAuthToken() {
-      this.$parent.JWT_TOKEN = await this.$auth.getTokenSilently();
-    },
     API_sharex_file: async function () {
       const vm = this;
       const { data } = await axios.get(
@@ -41,10 +38,7 @@ export default {
       document.body.removeChild(tempLink);
       window.URL.revokeObjectURL(url);
     },
-  },
-  created() {
-    this.getAuthToken();
-  },
+  }
 };
 </script>
 <style scoped>

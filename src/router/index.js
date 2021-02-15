@@ -2,9 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { authGuard } from "../auth/authGuard";
 import homepage from '../views/homepage.vue';
-import files from '../views/my_files.vue';
+import files from '../views/files.vue';
 import error_pagenotfound from '../views/error_notfound.vue';
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -20,14 +19,14 @@ const routes = [
     },  
     {
         path: '/files',
-        name: 'My Files',
+        name: 'Files',
         component: files,
         beforeEnter: authGuard,
         meta: {
-            title: 'My Files',
+            title: 'Files',
             visible: true
         },
-    }, 
+    },
     {
         path: '*',
         name: '404 Not Found',

@@ -14,7 +14,7 @@
                 <b-button v-on:click="API_deleteImage(`${data.item.image_id}`, `${data.item.uploader_id}`, `${data.item.image_link}`)" variant="danger">Delete</b-button>
             </template>
         </b-table>
-        <b-pagination size="md" :total-rows="totalItems" v-model="currentPage" :per-page="perPage"></b-pagination>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>
 
@@ -22,8 +22,7 @@
 import axios from "axios";
 
 export default {
-    name: "my_files",
-    components: {},
+    name: "files",
     data: function () {
         return {
             EMTPY_TABLE: '<p class="text-white">Loading data...</p>',
@@ -51,13 +50,25 @@ export default {
             ],
             items: [],
             currentPage: 1,
-            perPage: 10,
-            totalItems: 0,
         };
     },
     methods: {
-        async getAuthToken() {
-            this.$parent.JWT_TOKEN = await this.$auth.getTokenSilently();
+        async infiniteHandler($state) {
+            const vm = this;
+                axios.get(`${vm.$parent.API_BASE_URL}/images`, {
+                    params: { page: vm.currentPage },
+                    headers: {
+                        Authorization: `Bearer ${vm.$parent.JWT_TOKEN}`,
+                    },
+                }).then(({ data }) => {
+                    if (data.data.length) {
+                        vm.currentPage += 1;
+                        vm.items.push(...data.data);
+                        $state.loaded();
+                    } else {
+                        $state.complete();
+                    }
+                });
         },
         API_deleteImage: async function (imageID, userID, imageLink) {
             const vm = this;
@@ -93,74 +104,18 @@ export default {
                     if(response.data.error){
                         vm.$parent.$toast.error('There was an error deleting the file.', { position: 'top-right' });
                     }else{
+                        
                         vm.$parent.$toast.success('Successfully deleted the file.', { position: 'top-right' });
-                        vm.API_images().catch(error => {
-                            console.error(error)
-                        })
+                        console.log(vm.items);
+                        const index = vm.items.findIndex(x => x.image_id === `${imageID}`);
+                        console.log(index);
+                        vm.items.splice(index, 1);
                     }
                 });  
             }
             })
         },
-        API_images: async function () {
-            const vm = this;
-            const offset = vm.currentPage * vm.perPage - 10;
-            let authToken = vm.$parent.JWT_TOKEN;
-            if (await authToken == null){
-                await this.getAuthToken();
-                const { data } = await axios.get(`${vm.$parent.API_BASE_URL}/images`, {
-                    params: { offset: offset, limit: vm.perPage },
-                    headers: {
-                     Authorization: `Bearer ${vm.$parent.JWT_TOKEN}`,
-                    },
-                });
-                if(data.count == 0){
-                    vm.EMTPY_TABLE = '<h3 class="text-white">There are no files to show</h3>';
-                }
-                vm.totalItems = data.count;
-                vm.items = data.data;
-            }else{
-                const { data } = await axios.get(`${vm.$parent.API_BASE_URL}/images`, {
-                    params: { offset: offset, limit: vm.perPage },
-                    headers: {
-                        Authorization: `Bearer ${vm.$parent.JWT_TOKEN}`,
-                    },
-                });
-                if(data.count == 0){
-                    vm.EMTPY_TABLE = '<h3 class="text-white">There are no files to show</h3>';
-                }
-                vm.totalItems = data.count;
-                vm.items = data.data;
-            }
-        },
     },
-    created() {
-        this.getAuthToken();
-    },
-    mounted: function () {
-        this.API_images().catch(error => {
-            this.$parent.$toast.error(`Error Fetching Images: ${error}`, { position: 'top-right' });
-            console.error(error)
-        });
-        this.$nextTick(function () {
-            window.setInterval(() => {
-                this.API_images().catch(error => {
-                    this.$parent.$toast.error(`Error Fetching Images: ${error}`, { position: 'top-right' });
-                    console.error(error)
-                });
-            },this.$parent.REFRESH_INTERVAL);
-        })
-    },
-    watch: {
-        currentPage: {
-            handler: function() {
-                this.API_images().catch(error => {
-                    this.$parent.$toast.error(`Error Fetching Images: ${error}`, { position: 'top-right' });
-                    console.error(error)
-                });
-            }
-        }
-    }
 };
 </script>
 <style scoped>

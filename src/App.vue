@@ -21,8 +21,8 @@ export default {
       USER_DOMAINS: null,
       USER_DEFAULT_DOMAIN: null,
       USER_INFO: null,
-      JWT_TOKEN: null,
-      REFRESH_INTERVAL: 10 * 1000,
+      JWT_TOKEN: this.$parent.token,
+      REFRESH_INTERVAL: 5 * 1000,
     }
   },
 }
@@ -34,7 +34,6 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
   background-color: #121212 !important;
 }
 </style>
