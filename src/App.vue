@@ -14,7 +14,7 @@ export default {
   },
   data: function () {
     return {
-      API_BASE_URL: "https://api.blob.rocks/api/v2",
+      API_BASE_URL: "https://image-host-api.ryois.net/api/v2",
       API_KEY: null,
       STORAGE_USAGE: null,
       STORAGE_LIMIT: null,

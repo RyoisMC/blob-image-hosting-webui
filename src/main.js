@@ -49,7 +49,7 @@ instance.$watch("loading", async loading => {
       render: h => h(App),
     }).$mount('#app')
   } else {
-    instance.loginWithRedirect();
+    instance.loginWithRedirect({connection: 'discord'});
   }
 });
 
